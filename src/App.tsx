@@ -32,7 +32,7 @@ export default function App() {
 						}
 						setRevealed(false)
 					}}
-					value={date.toISOString().substring(0, 10)}
+					defaultValue={date.toISOString().substring(0, 10)}
 				/>
 
 				{revealed ? (
