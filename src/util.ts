@@ -10,7 +10,7 @@ export const getWordForDate = (currentDate: Date) => {
 }
 
 export function dateToHumanReadable(date: Date) {
-	const dateTime = date.getTime(),
+	const dateTime = date.setHours(0, 0, 0, 0),
 		currentDate = new Date().setHours(0, 0, 0, 0)
 
 	if (dateTime === currentDate) return "hoje"
