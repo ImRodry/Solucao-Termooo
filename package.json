@@ -7,7 +7,7 @@
     "url": "https://github.com/ImRodry"
   },
   "license": "GPL-3.0",
-  "homepage": "https://imrodry.github.io/Termooo-Solver/",
+  "homepage": "https://solucao-termooo.vercel.app/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
