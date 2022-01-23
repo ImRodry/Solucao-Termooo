@@ -1,10 +1,12 @@
 import words from "./palavras.json"
 
+export const epoch = new Date(2022, 0, 2, 0, 0, 0, 0)
+
 export const doesPreferDark = () => !!window.matchMedia("(prefers-color-scheme: dark)").matches
 
 export const getWordForDate = (currentDate: Date) => {
 	// Epoch: 2/1/2022 - January 2nd 2022
-	const msSinceEpoch = currentDate.setHours(0, 0, 0, 0) - new Date(2022, 0, 2, 0, 0, 0, 0).getTime()
+	const msSinceEpoch = currentDate.setHours(0, 0, 0, 0) - epoch.getTime()
 
 	return words[Math.round(msSinceEpoch / 864e5) % words.length]
 }

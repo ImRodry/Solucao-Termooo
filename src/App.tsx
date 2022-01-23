@@ -1,10 +1,11 @@
 import React from "react"
 import { Box, Button, Container, Input, Typography } from "@mui/material"
-import { getWordForDate, dateToHumanReadable, formatDate } from "./util"
+import { getWordForDate, dateToHumanReadable, formatDate, epoch } from "./util"
 
 export default function App() {
 	const [date, setDate] = React.useState(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000)),
-		[revealed, setRevealed] = React.useState(false)
+		[revealed, setRevealed] = React.useState(false),
+		dayWord = getWordForDate(date)
 
 	return (
 		<Container maxWidth="md">
@@ -33,7 +34,7 @@ export default function App() {
 
 				{revealed ? (
 					<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
-						Palavra de {dateToHumanReadable(date)}: {getWordForDate(date)}
+						{dayWord ? `Palavra de ${dateToHumanReadable(date)}: ${dayWord}` : `O Termooo só começou a ${formatDate(epoch)}!`}
 					</Typography>
 				) : (
 					<>
