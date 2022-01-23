@@ -23,14 +23,12 @@ export default function App() {
 				<Input
 					type="date"
 					onChange={e => {
-						if (e.target.value) setDate(new Date(e.target.value))
-						else {
-							setDate(new Date())
-							e.target.value = formatDate(new Date())
-						}
+						if (e.target.value) setDate(new Date(Date.parse(e.target.value) - new Date().getTimezoneOffset() * 60_000))
+						else setDate(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000))
+
 						setRevealed(false)
 					}}
-					defaultValue={date.toISOString().substring(0, 10)}
+					value={date.toISOString().substring(0, 10)}
 				/>
 
 				{revealed ? (
