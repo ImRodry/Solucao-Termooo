@@ -7,6 +7,7 @@
     "url": "https://github.com/ImRodry"
   },
   "license": "GPL-3.0",
+  "homepage": "https://imrodry.github.io/Termooo-Solver/",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
