@@ -3,7 +3,7 @@ import { Box, Button, Container, Input, Typography } from "@mui/material"
 import { getWordForDate, dateToHumanReadable, formatDate } from "./util"
 
 export default function App() {
-	const [date, setDate] = React.useState(new Date()),
+	const [date, setDate] = React.useState(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000)),
 		[revealed, setRevealed] = React.useState(false)
 
 	return (
