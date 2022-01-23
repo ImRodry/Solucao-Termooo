@@ -1,12 +1,10 @@
 import React from "react"
-import { Box, Button, Container, Input, Typography, TableFooter } from "@mui/material"
+import { Box, Button, Container, Input, Typography } from "@mui/material"
 import { getWordForDate, dateToHumanReadable, formatDate } from "./util"
 
 export default function App() {
 	const [date, setDate] = React.useState(new Date()),
-		[revealed, setRevealed] = React.useState(false),
-		wordForDate = getWordForDate(date),
-		formattedDate = dateToHumanReadable(date)
+		[revealed, setRevealed] = React.useState(false)
 
 	return (
 		<Container maxWidth="md">
@@ -37,7 +35,7 @@ export default function App() {
 
 				{revealed ? (
 					<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
-						Palavra de {formattedDate}: {wordForDate}
+						Palavra de {dateToHumanReadable(date)}: {getWordForDate(date)}
 					</Typography>
 				) : (
 					<>
