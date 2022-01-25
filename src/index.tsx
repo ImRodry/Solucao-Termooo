@@ -1,10 +1,9 @@
+import { red } from "@mui/material/colors"
+import CssBaseline from "@mui/material/CssBaseline"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 import React from "react"
 import ReactDOM from "react-dom"
-import CssBaseline from "@mui/material/CssBaseline"
-import { ThemeProvider } from "@mui/material/styles"
 import App from "./App"
-import { createTheme } from "@mui/material/styles"
-import { red } from "@mui/material/colors"
 import { doesPreferDark } from "./util"
 
 const theme = createTheme({
