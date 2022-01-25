@@ -50,7 +50,7 @@ export default function App() {
 					confirmTip ? (
 						<>
 							<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
-								Dica com {letters} em comum com a palavra de {dateToHumanReadable(date)}: {generateTip(dayWord, letters)}
+								Dica com {letters} letras em comum com a palavra de {dateToHumanReadable(date)}: {generateTip(dayWord, letters)}
 							</Typography>
 							<Button onClick={() => setRevealed(true)}>Revelar palavra</Button>
 						</>
