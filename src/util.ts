@@ -1,4 +1,5 @@
-import words from "./palavras.json"
+import allWords from "./palavras.json"
+import correctWords from "./palavras.json"
 
 export const epoch = new Date(2022, 0, 2, 0, 0, 0, 0)
 
@@ -8,7 +9,7 @@ export const getWordForDate = (currentDate: Date) => {
 	// Epoch: 2/1/2022 - January 2nd 2022
 	const msSinceEpoch = currentDate.setHours(0, 0, 0, 0) - epoch.getTime()
 
-	return words[Math.round(msSinceEpoch / 864e5) % words.length]
+	return correctWords[Math.round(msSinceEpoch / 864e5) % correctWords.length]
 }
 
 export const normalizeWord = (word: string) => word.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -21,7 +22,7 @@ export function generateTip(word: string, letterCount: 1 | 2 | 3 | 4) {
 		return lc
 	}, {})
 
-	const matchingWords = words.filter(testWord => {
+	const matchingWords = allWords.filter(testWord => {
 		const [...normTestWord] = normalizeWord(testWord)
 		// Same thing we did for the target word, but also counting the total number of matches
 		const result = normTestWord.reduce<{ encountered: Record<string, number>; match: number }>(
