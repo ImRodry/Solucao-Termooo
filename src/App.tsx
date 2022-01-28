@@ -50,7 +50,8 @@ export default function App() {
 					confirmTip ? (
 						<>
 							<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
-								Dica com {letters === 1 ? `${letters} letra` : `${letters} letras`} em comum com a palavra de {dateToHumanReadable(date)}: {generateTip(dayWord, letters)}
+								Dica com {letters === 1 ? `${letters} letra` : `${letters} letras`} em comum com a palavra de {dateToHumanReadable(date)}:{" "}
+								{generateTip(dayWord, letters)}
 							</Typography>
 							<Button onClick={() => setRevealed(true)}>Revelar palavra</Button>
 						</>
@@ -62,6 +63,7 @@ export default function App() {
 							<Input
 								size="medium"
 								type="number"
+								inputMode="numeric"
 								inputProps={{ min: 1, max: 4 }}
 								defaultValue="1"
 								onChange={e => setLetters(Number(e.target.value))}
