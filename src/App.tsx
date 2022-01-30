@@ -8,7 +8,8 @@ export default function App() {
 		[showTip, setTip] = React.useState(false),
 		[confirmTip, setConfirmTip] = React.useState(false),
 		[letters, setLetters] = React.useState(1) as [LetterCount, Dispatch<SetStateAction<number>>],
-		dayWord = getWordForDate(date)
+		dayWord = getWordForDate(date),
+		tip = generateTip(dayWord, letters)
 
 	function resetDefaults() {
 		setRevealed(false)
@@ -42,44 +43,65 @@ export default function App() {
 					value={date.toISOString().substring(0, 10)}
 				/>
 
+				{confirmTip && !showTip && !revealed ? (
+					<>
+						<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
+							{tip
+								? `Dica com ${letters === 1 ? `${letters} letra` : `${letters} letras`} em comum com a palavra de ${dateToHumanReadable(
+										date,
+								  )}: ${tip}`
+								: `Tens de escolher um número de letras entre 1 e 5! Para veres a palavra, clica em "${
+										document.querySelector("#root > div > div > button:nth-child(6)")!.textContent
+								  }"`}
+						</Typography>
+					</>
+				) : showTip ? (
+					<>
+						<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
+							Seleciona o número de letras que desejas incluir na dica. Isto não te irá dar a resposta certa, mas pode sempre ajudar!
+						</Typography>
+						<Input
+							size="medium"
+							type="number"
+							inputMode="numeric"
+							inputProps={{ min: 1, max: 5 }}
+							value={letters}
+							onChange={e => setLetters(Number(e.target.value))}
+						></Input>
+						<>
+							<br />
+							<Button
+								onClick={() => {
+									setConfirmTip(true)
+									setTip(false)
+								}}
+							>
+								Mostrar dica
+							</Button>
+						</>
+					</>
+				) : (
+					""
+				)}
 				{revealed ? (
 					<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
 						{dayWord ? `Palavra de ${dateToHumanReadable(date)}: ${dayWord}` : `O Termooo só começou a ${formatDate(epoch)}!`}
 					</Typography>
-				) : showTip ? (
-					confirmTip ? (
-						<>
-							<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
-								Dica com {letters === 1 ? `${letters} letra` : `${letters} letras`} em comum com a palavra de {dateToHumanReadable(date)}:{" "}
-								{generateTip(dayWord, letters)}
-							</Typography>
-							<Button onClick={() => setRevealed(true)}>Revelar palavra</Button>
-						</>
-					) : (
-						<>
-							<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
-								Seleciona o número de letras que desejas incluir na dica
-							</Typography>
-							<Input
-								size="medium"
-								type="number"
-								inputMode="numeric"
-								inputProps={{ min: 1, max: 4 }}
-								defaultValue="1"
-								onChange={e => setLetters(Number(e.target.value))}
-							></Input>
-							<>
-								<br />
-								<Button onClick={() => setConfirmTip(true)}>Mostrar dica</Button>
-							</>
-						</>
-					)
-				) : (
+				) : confirmTip || !showTip ? (
 					<>
-						<br />
+						{!confirmTip ? <br /> : <></>}
 						<Button onClick={() => setRevealed(true)}>Revelar palavra</Button>
-						<Button onClick={() => setTip(true)}>Ver dica</Button>
+						<Button
+							onClick={() => {
+								setTip(true)
+								setConfirmTip(false)
+							}}
+						>
+							Ver dica
+						</Button>
 					</>
+				) : (
+					""
 				)}
 			</Box>
 		</Container>

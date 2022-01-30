@@ -23,6 +23,7 @@ export function generateTip(word: string, letterCount: 1 | 2 | 3 | 4) {
 	}, {})
 
 	const matchingWords = allWords.filter(testWord => {
+		if (testWord === word) return false
 		const [...normTestWord] = normalizeWord(testWord)
 		// Same thing we did for the target word, but also counting the total number of matches
 		const result = normTestWord.reduce<{ encountered: Record<string, number>; match: number }>(
