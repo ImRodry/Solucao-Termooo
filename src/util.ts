@@ -1,5 +1,5 @@
 import allWords from "./palavras.json"
-import correctWords from "./palavras.json"
+import correctWords from "./palavrasCertas.json"
 
 export const epoch = new Date(2022, 0, 2, 0, 0, 0, 0)
 
