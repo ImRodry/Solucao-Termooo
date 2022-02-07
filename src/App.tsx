@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react"
-import { Box, Button, Container, Input, Typography } from "@mui/material"
+import { Box, Button, Container, Input, Typography, Select, FormControl, InputLabel, MenuItem } from "@mui/material"
 import { getWordForDate, dateToHumanReadable, formatDate, epoch, generateTip, LetterCount } from "./util"
 
 export default function App() {
@@ -60,14 +60,16 @@ export default function App() {
 						<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
 							Seleciona o número de letras que desejas incluir na dica. Isto não te irá dar a resposta certa, mas pode sempre ajudar!
 						</Typography>
-						<Input
-							size="medium"
-							type="number"
-							inputMode="numeric"
-							inputProps={{ min: 1, max: 5 }}
-							value={letters}
-							onChange={e => setLetters(Number(e.target.value))}
-						></Input>
+						<FormControl>
+							<InputLabel id="select-letters">Letras</InputLabel>
+							<Select<LetterCount> labelId="select-letters" value={letters} label="Age" onChange={e => setLetters(e.target.value as LetterCount)}>
+								<MenuItem value={1}>1</MenuItem>
+								<MenuItem value={2}>2</MenuItem>
+								<MenuItem value={3}>3</MenuItem>
+								<MenuItem value={4}>4</MenuItem>
+								<MenuItem value={5}>5</MenuItem>
+							</Select>
+						</FormControl>
 						<>
 							<br />
 							<Button
