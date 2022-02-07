@@ -14,7 +14,7 @@ export const getWordForDate = (currentDate: Date) => {
 
 export const normalizeWord = (word: string) => word.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-export function generateTip(word: string, letterCount: 1 | 2 | 3 | 4) {
+export function generateTip(word: string, letterCount: LetterCount) {
 	const [...normTargetWord] = normalizeWord(word)
 	// Count each letter of the word
 	const letterCountsTargetWord = normTargetWord.reduce<Record<string, number>>((lc, char) => {
@@ -42,7 +42,7 @@ export function generateTip(word: string, letterCount: 1 | 2 | 3 | 4) {
 	return matchingWords[Math.floor(Math.random() * matchingWords.length)]
 }
 
-export type LetterCount = 1 | 2 | 3 | 4
+export type LetterCount = 1 | 2 | 3 | 4 | 5
 
 export function dateToHumanReadable(date: Date) {
 	const dateTime = date.setHours(0, 0, 0, 0),
