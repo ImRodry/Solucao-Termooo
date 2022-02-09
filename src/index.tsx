@@ -30,6 +30,7 @@ ReactDOM.render(
 			<Routes>
 				<Route path="/" element={<Navigate replace to="/termooo" />} />
 				<Route path="/termooo" element={<Termooo />} />
+				<Route path="/palavra-do-dia" element={<PalavraDoDia />} />
 			</Routes>
 		</BrowserRouter>
 	</ThemeProvider>,
