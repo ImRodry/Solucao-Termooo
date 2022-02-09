@@ -24,7 +24,7 @@ export default function App(path: Games) {
 		<Container maxWidth="md">
 			<Box sx={{ my: 4, textAlign: "center" }}>
 				<Typography variant="h3" component="h1" gutterBottom>
-					Solução d{gameName}
+					{document.title}
 				</Typography>
 
 				<Typography variant="body2" component="h2" gutterBottom>
