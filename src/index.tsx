@@ -3,29 +3,35 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./App"
-import { doesPreferDark } from "./util"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import PalavraDoDia from "./util/palavra-do-dia/PalavraDoDia"
+import Termooo from "./util/termooo/Termooo"
+import { doesPreferDark } from "./util/util"
 
 const theme = createTheme({
 	palette: {
 		primary: {
-			main: "#21DE3D"
+			main: "#21DE3D",
 		},
 		secondary: {
-			main: "#6e5c62"
+			main: "#6e5c62",
 		},
 		error: {
-			main: red.A400
+			main: red.A400,
 		},
-		mode: doesPreferDark() ? "dark" : "light"
-	}
+		mode: doesPreferDark() ? "dark" : "light",
+	},
 })
-
 
 ReactDOM.render(
 	<ThemeProvider theme={theme}>
 		<CssBaseline />
-		<App />
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Navigate replace to="/termooo" />} />
+				<Route path="/termooo" element={<Termooo />} />
+			</Routes>
+		</BrowserRouter>
 	</ThemeProvider>,
 	document.querySelector("#root"),
 )
