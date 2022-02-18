@@ -50,12 +50,13 @@ export default function App(path: Games) {
 						<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
 							{tip
 								? `Dica com ${letters === 1 ? `${letters} letra` : `${letters} letras`} em comum com a palavra de ${dateToHumanReadable(
-									date,
-								)}: ${tip}`
+										date,
+								  )}: ${tip}`
 								: dayWord
-									? `Tens de escolher um número de letras entre 1 e 5! Para veres a palavra, clica em "${document.querySelector("#root > div > div > button:nth-child(6)")!.textContent
-									}"`
-									: `${gameName.charAt(0).toUpperCase()}${gameName.slice(1)} só começou a ${formatDate(epoch)}!`}
+								? `Tens de escolher um número de letras entre 1 e 5! Para veres a palavra, clica em "${
+										document.querySelector("#root > div > div > button:nth-child(6)")!.textContent
+								  }"`
+								: `${gameName.charAt(0).toUpperCase()}${gameName.slice(1)} só começou a ${formatDate(epoch)}!`}
 						</Typography>
 					</>
 				) : showTip ? (
