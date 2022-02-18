@@ -7,7 +7,7 @@ export default function App(path: Games) {
 		[revealed, setRevealed] = React.useState(false),
 		[showTip, setTip] = React.useState(false),
 		[confirmTip, setConfirmTip] = React.useState(false),
-		[letters, setLetters] = React.useState(1) as [LetterCount, Dispatch<SetStateAction<number>>],
+		[letters, setLetters] = React.useState<LetterCount>(1),
 		dayWord = getWordForDate(date, path),
 		tip = generateTip(dayWord, letters, path),
 		{ epoch } = require(`./util/${path}/util`) as GameData,
