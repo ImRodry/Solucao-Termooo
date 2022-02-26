@@ -53,7 +53,7 @@ export default function App(path: Games) {
 										date,
 								  )}: ${tip}`
 								: dayWord
-								? `Tens de escolher um número de letras entre 1 e 5! Para veres a palavra, clica em "${
+								? `Não foi possível encontrar uma dica com esse número de letras em comum com a palavra de hoje! Para veres a palavra, clica em "${
 										document.querySelector("#root > div > div > button:nth-child(6)")!.textContent
 								  }"`
 								: `${gameName.charAt(0).toUpperCase()}${gameName.slice(1)} só começou a ${formatDate(epoch)}!`}
