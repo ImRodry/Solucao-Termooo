@@ -1,23 +1,26 @@
-import React from "react"
-import { Box, Button, Container, Input, Typography, Select, FormControl, InputLabel, MenuItem } from "@mui/material"
-import { getWordForDate, dateToHumanReadable, formatDate, generateTip, LetterCount, GameData, Games } from "./util/util"
+import { type ChangeEvent, type KeyboardEvent, useRef, useState } from "react"
+import { Box, Button, Container, Input, Typography, TextField } from "@mui/material"
+import { getWordForDate, dateToHumanReadable, formatDate, generateTip, GameData, Games, WordArray } from "./util/util"
 
 export default function App(path: Games) {
-	const [date, setDate] = React.useState(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000)),
-		[revealed, setRevealed] = React.useState(false),
-		[showTip, setTip] = React.useState(false),
-		[confirmTip, setConfirmTip] = React.useState(false),
-		[letters, setLetters] = React.useState<LetterCount>(1),
+	const [date, setDate] = useState(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000)),
+		[revealed, setRevealed] = useState(false),
+		[showTip, setTip] = useState(false),
+		[confirmTip, setConfirmTip] = useState(false),
+		[badLetters, setBadLetters] = useState(""),
+		[goodLetters, setGoodLetters] = useState(""),
+		[word, setWord] = useState<WordArray>(Array<string>(5).fill("") as WordArray),
+		wordPartRefs = useRef<HTMLInputElement[]>([]),
 		dayWord = getWordForDate(date, path),
-		tip = generateTip(dayWord, letters, path),
+		tip = generateTip(badLetters, goodLetters, word, path).join(", "),
 		{ epoch } = require(`./util/${path}/util`) as GameData,
 		gameName = getName(path)
 
+	let previousEvent: KeyboardEvent<HTMLDivElement> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
 	function resetDefaults() {
 		setRevealed(false)
 		setTip(false)
 		setConfirmTip(false)
-		setLetters(1)
 	}
 
 	return (
@@ -49,31 +52,70 @@ export default function App(path: Games) {
 					<>
 						<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
 							{tip
-								? `Dica com ${letters === 1 ? `${letters} letra` : `${letters} letras`} em comum com a palavra de ${dateToHumanReadable(
-										date,
-								  )}: ${tip}`
-								: dayWord
-								? `Não foi possível encontrar uma dica com esse número de letras em comum com a palavra de hoje! Para veres a palavra, clica em "${
-										document.querySelector("#root > div > div > button:nth-child(6)")!.textContent
-								  }"`
-								: `${gameName.charAt(0).toUpperCase()}${gameName.slice(1)} só começou a ${formatDate(epoch)}!`}
+								? `Palavras encontradas:\n${tip}`
+								: "Não foi possível encontrar nenhuma palavra com a configuração apresentada. Experimenta alterar a configuração ou ver a solução de hoje"}
 						</Typography>
 					</>
 				) : showTip ? (
 					<>
-						<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
-							Seleciona o número de letras que desejas incluir na dica. Isto não te irá dar a resposta certa, mas pode sempre ajudar!
-						</Typography>
-						<FormControl>
-							<InputLabel id="select-letters">Letras</InputLabel>
-							<Select<LetterCount> labelId="select-letters" value={letters} label="Age" onChange={e => setLetters(e.target.value as LetterCount)}>
-								<MenuItem value={1}>1</MenuItem>
-								<MenuItem value={2}>2</MenuItem>
-								<MenuItem value={3}>3</MenuItem>
-								<MenuItem value={4}>4</MenuItem>
-								<MenuItem value={5}>5</MenuItem>
-							</Select>
-						</FormControl>
+						<br />
+						<br />
+						<TextField
+							color="error"
+							variant="standard"
+							placeholder="Letras erradas"
+							value={badLetters}
+							onChange={e => setBadLetters(e.target.value)}
+						></TextField>
+						<br />
+						<TextField
+							color="success"
+							variant="standard"
+							placeholder="Letras corretas"
+							value={goodLetters}
+							onChange={e => setGoodLetters(e.target.value)}
+						></TextField>
+						<br />
+
+						{Array.from({ length: word.length }, (_, i) => {
+							function handleCharChange(char: string, index = i) {
+								const newWord = [...word] as WordArray
+								newWord[index] = /[A-Z]/gi.test(char) ? char?.toUpperCase() ?? "" : ""
+								setWord(newWord)
+							}
+
+							function changeCharFocus(index: number) {
+								const ref = wordPartRefs.current[index]
+								ref?.focus()
+							}
+
+							return (
+								<TextField
+									variant="outlined"
+									style={{ width: 40, marginRight: 3, marginTop: 10, textAlign: "center" }}
+									ref={el => {
+										if (el) wordPartRefs.current[i] = el.querySelector<HTMLInputElement>("input")!
+									}}
+									key={i}
+									onKeyDown={e => {
+										if (e.nativeEvent.code !== "Backspace") return
+
+										if (word[i]) handleCharChange("")
+										else handleCharChange("", i - 1)
+										changeCharFocus(i - 1)
+										previousEvent = e
+									}}
+									onChange={e => {
+										if (previousEvent?.type === "keydown" && !e.target.value) return
+										handleCharChange(e.target.value.at(-1) ?? "")
+										changeCharFocus(i + 1)
+										previousEvent = e
+									}}
+									value={word[i]}
+								></TextField>
+							)
+						})}
+
 						<>
 							<br />
 							<Button

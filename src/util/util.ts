@@ -9,34 +9,22 @@ export const getWordForDate = (currentDate: Date, path: Games) => {
 
 export const normalizeWord = (word: string) => word.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-export function generateTip(word: string, letterCount: LetterCount, path: Games) {
-	if (!word) return null
-	const { allWords }: GameData = require(`./${path}/util`),
-		[...normTargetWord] = normalizeWord(word),
-		// Count each letter of the word
-		letterCountsTargetWord = normTargetWord.reduce<Record<string, number>>((lc, char) => {
-			lc[char] ? lc[char]++ : (lc[char] = 1)
-			return lc
-		}, {}),
-		matchingWords = allWords.filter(testWord => {
-			if (testWord === word) return false
-			const [...normTestWord] = normalizeWord(testWord),
-				// Same thing we did for the target word, but also counting the total number of matches
-				result = normTestWord.reduce<{ encountered: Record<string, number>; match: number }>(
-					(res, char) => {
-						res.encountered[char] ? res.encountered[char]++ : (res.encountered[char] = 1)
-						// Make sure we don't count a letter more times than it appears in the target word
-						if (res.encountered[char] <= (letterCountsTargetWord[char] ?? 0)) {
-							res.match++
-						}
-						return res
-					},
-					{ encountered: {}, match: 0 },
-				)
-			return result.match === letterCount
-		})
-	return matchingWords[Math.floor(Math.random() * matchingWords.length)]
+export function generateTip(badLetters: string, goodLetters: string, wordGuess: WordArray, path: Games) {
+	const { allWords }: GameData = require(`./${path}/util`)
+	return allWords.filter(w => {
+		const [...normWord] = normalizeWord(w.toLowerCase())
+		return (
+			[...badLetters].every(l => !normWord.includes(l)) &&
+			[...goodLetters].every(l => normWord.includes(l)) &&
+			wordGuess.every((l, i) => {
+				if (l) return normWord[i] === l.toLowerCase()
+				else return true
+			})
+		)
+	})
 }
+
+export type WordArray = [string, string, string, string, string]
 
 export function dateToHumanReadable(date: Date) {
 	const dateTime = date.setHours(0, 0, 0, 0),

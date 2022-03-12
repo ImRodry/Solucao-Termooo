@@ -1,4 +1,4 @@
-import { red } from "@mui/material/colors"
+import { red, lightGreen } from "@mui/material/colors"
 import CssBaseline from "@mui/material/CssBaseline"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import React from "react"
@@ -17,7 +17,10 @@ const theme = createTheme({
 			main: "#6e5c62",
 		},
 		error: {
-			main: red.A400,
+			main: red[500],
+		},
+		success: {
+			main: lightGreen.A400,
 		},
 		mode: doesPreferDark() ? "dark" : "light",
 	},
