@@ -17,7 +17,7 @@ export function generateTip(badLetters: string, goodLetters: string, wordGuess: 
 			[...badLetters].every(l => !normWord.includes(l)) &&
 			[...goodLetters].every(l => normWord.includes(l)) &&
 			wordGuess.every((l, i) => {
-				if (l) return normWord[i] === l.toLowerCase()
+				if (l) return normWord[i] === l
 				else return true
 			})
 		)

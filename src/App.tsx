@@ -52,7 +52,7 @@ export default function App(path: Games) {
 					<>
 						<Typography variant="body1" gutterBottom sx={{ my: 2 }}>
 							{tip
-								? `Palavras encontradas:\n${tip}`
+								? ["Palavras encontradas:", <br key="I need this here to make deepscan shut up" />, tip]
 								: "Não foi possível encontrar nenhuma palavra com a configuração apresentada. Experimenta alterar a configuração ou ver a solução de hoje"}
 						</Typography>
 					</>
@@ -64,23 +64,37 @@ export default function App(path: Games) {
 							color="error"
 							variant="standard"
 							placeholder="Letras erradas"
-							value={badLetters}
-							onChange={e => setBadLetters(e.target.value)}
+							value={badLetters.toUpperCase()}
+							onChange={e =>
+								setBadLetters(
+									[...normalizeWord(e.target.value)]
+										.filter(l => /[A-Z]/gi.test(l))
+										.join("")
+										.toLowerCase(),
+								)
+							}
 						></TextField>
 						<br />
 						<TextField
 							color="success"
 							variant="standard"
 							placeholder="Letras corretas"
-							value={goodLetters}
-							onChange={e => setGoodLetters(e.target.value)}
+							value={goodLetters.toUpperCase()}
+							onChange={e =>
+								setGoodLetters(
+									[...normalizeWord(e.target.value)]
+										.filter(l => /[A-Z]/gi.test(l))
+										.join("")
+										.toLowerCase(),
+								)
+							}
 						></TextField>
 						<br />
 
 						{Array.from({ length: word.length }, (_, i) => {
 							function handleCharChange(char: string, index = i) {
 								const newWord = [...word] as WordArray
-								newWord[index] = /[A-Z]/gi.test(char) ? char?.toUpperCase() ?? "" : ""
+								newWord[index] = /[A-Z]/gi.test(char) ? char?.toLowerCase() ?? "" : ""
 								setWord(newWord)
 							}
 
@@ -111,7 +125,7 @@ export default function App(path: Games) {
 										changeCharFocus(i + 1)
 										previousEvent = e
 									}}
-									value={word[i]}
+									value={word[i].toUpperCase()}
 								></TextField>
 							)
 						})}
@@ -147,7 +161,7 @@ export default function App(path: Games) {
 								setConfirmTip(false)
 							}}
 						>
-							Ver dica
+							Pedir dica
 						</Button>
 					</>
 				) : (
