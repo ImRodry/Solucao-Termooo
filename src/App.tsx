@@ -73,6 +73,7 @@ export default function App(path: Games) {
 										.toLowerCase(),
 								)
 							}
+							autoComplete="off"
 						></TextField>
 						<br />
 						<TextField
@@ -88,6 +89,7 @@ export default function App(path: Games) {
 										.toLowerCase(),
 								)
 							}
+							autoComplete="off"
 						></TextField>
 						<br />
 
@@ -126,6 +128,7 @@ export default function App(path: Games) {
 										previousEvent = e
 									}}
 									value={word[i].toUpperCase()}
+									autoComplete="off"
 								></TextField>
 							)
 						})}
