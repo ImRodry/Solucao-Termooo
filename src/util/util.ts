@@ -41,7 +41,7 @@ export const formatDate = (date: Date) => `${date.getDate()}/${date.getMonth() +
 
 export type LetterCount = 1 | 2 | 3 | 4 | 5
 
-export type Games = "termooo" | "palavra-do-dia"
+export type Games = "termooo" | "palavra-do-dia" | "termopt"
 
 export interface GameData {
 	allWords: string[]

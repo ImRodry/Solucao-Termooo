@@ -6,6 +6,7 @@ import ReactDOM from "react-dom"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import PalavraDoDia from "./util/palavra-do-dia/PalavraDoDia"
 import Termooo from "./util/termooo/Termooo"
+import Termopt from "./util/termopt/Termopt"
 import { doesPreferDark } from "./util/util"
 
 const theme = createTheme({
@@ -34,6 +35,7 @@ ReactDOM.render(
 				<Route path="/" element={<Navigate replace to="/termooo" />} />
 				<Route path="/termooo" element={<Termooo />} />
 				<Route path="/palavra-do-dia" element={<PalavraDoDia />} />
+				<Route path="/termopt" element={<Termopt />} />
 			</Routes>
 		</BrowserRouter>
 	</ThemeProvider>,

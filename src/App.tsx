@@ -181,5 +181,7 @@ function getName(type: Games) {
 			return "o Termooo"
 		case "palavra-do-dia":
 			return "a Palavra do dia"
+		case "termopt":
+			return "o Termo"
 	}
 }
