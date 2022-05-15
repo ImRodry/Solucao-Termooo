@@ -34,19 +34,26 @@ export default function App(path: Games) {
 					Rodry © {new Date().getFullYear()}
 				</Typography>
 
-				<Typography variant="h6" gutterBottom>
-					Seleciona uma data:
-				</Typography>
-				<Input
-					type="date"
-					onChange={e => {
-						if (e.target.value) setDate(new Date(Date.parse(e.target.value) - new Date().getTimezoneOffset() * 60_000))
-						else setDate(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000))
+				{!showTip ? (
+					<>
+						<Typography variant="h6" gutterBottom>
+							Seleciona uma data:
+						</Typography>
+						<Input
+							type="date"
+							onChange={e => {
+								if (e.target.value)
+									setDate(new Date(Date.parse(e.target.value) - new Date().getTimezoneOffset() * 60_000))
+								else setDate(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000))
 
-						resetDefaults()
-					}}
-					value={date.toISOString().substring(0, 10)}
-				/>
+								resetDefaults()
+							}}
+							value={date.toISOString().substring(0, 10)}
+						/>
+					</>
+				) : (
+					""
+				)}
 
 				{confirmTip && !showTip && !revealed ? (
 					<>
@@ -58,8 +65,6 @@ export default function App(path: Games) {
 					</>
 				) : showTip ? (
 					<>
-						<br />
-						<br />
 						<TextField
 							color="error"
 							variant="standard"
@@ -68,7 +73,7 @@ export default function App(path: Games) {
 							onChange={e =>
 								setBadLetters(
 									[...normalizeWord(e.target.value)]
-										.filter(l => /[A-Z]/gi.test(l))
+										.filter(l => /[A-Z]/gi.test(l) && !goodLetters.includes(l) && word.every(wl => wl !== l))
 										.join("")
 										.toLowerCase(),
 								)
@@ -84,7 +89,7 @@ export default function App(path: Games) {
 							onChange={e =>
 								setGoodLetters(
 									[...normalizeWord(e.target.value)]
-										.filter(l => /[A-Z]/gi.test(l))
+										.filter(l => /[A-Z]/gi.test(l) && !badLetters.includes(l) && word.every(wl => wl !== l))
 										.join("")
 										.toLowerCase(),
 								)
@@ -96,7 +101,10 @@ export default function App(path: Games) {
 						{Array.from({ length: word.length }, (_, i) => {
 							function handleCharChange(char: string, index = i) {
 								const newWord = [...word] as WordArray
-								newWord[index] = /[A-Z]/gi.test(char) ? char?.toLowerCase() ?? "" : ""
+								newWord[index] =
+									/[A-Z]/gi.test(char) && !goodLetters.includes(char) && !badLetters.includes(char)
+										? char?.toLowerCase() ?? ""
+										: ""
 								setWord(newWord)
 							}
 
