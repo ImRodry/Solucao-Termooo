@@ -1,6 +1,15 @@
 import { type ChangeEvent, type KeyboardEvent, useRef, useState } from "react"
 import { Box, Button, Container, Input, Typography, TextField } from "@mui/material"
-import { getWordForDate, dateToHumanReadable, formatDate, generateTip, GameData, Games, WordArray, normalizeWord } from "./util/util"
+import {
+	getWordForDate,
+	dateToHumanReadable,
+	formatDate,
+	generateTip,
+	GameData,
+	Games,
+	WordArray,
+	normalizeWord,
+} from "./util/util"
 
 export default function App(path: Games) {
 	const [date, setDate] = useState(new Date(Date.now() - new Date().getTimezoneOffset() * 60_000)),
