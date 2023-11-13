@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/node": "18",
     "@types/react": "^18.2.33",
-    "@types/react-dom": "^18.2.14"
+    "@types/react-dom": "^18.2.15"
   },
   "engines": {
     "node": ">=14.0.0"
